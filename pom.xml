@@ -33,7 +33,12 @@
             <artifactId>spring-beans</artifactId>
             <version>5.3.20</version>
         </dependency>
-    </dependencies>
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.2.79</version>
+		</dependency>
+	</dependencies>
 
 	<build>
 		<plugins>

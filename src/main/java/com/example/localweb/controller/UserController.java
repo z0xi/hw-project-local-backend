@@ -1,18 +1,17 @@
 package com.example.localweb.controller;
+import com.alibaba.fastjson.JSONObject;
 import com.example.localweb.entity.User;
 import com.example.localweb.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.util.List;
 
 @RestController
+@CrossOrigin
 public class UserController {
     @Autowired
     UserService service;
@@ -20,6 +19,40 @@ public class UserController {
     public String getUserItem(){
         User user = service.getUserInfo();
         return user.toString();
+    }
+    @ResponseBody
+    @RequestMapping(value = "/localRequestService",method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public String requestService(@RequestBody List<JSONObject> l) throws IOException, InterruptedException {
+        JSONObject obj = new JSONObject();
+        for(JSONObject json : l){
+            obj.put(json.getString("name"),json.get("value"));
+        }
+
+        String content = obj.toJSONString();
+        System.out.print(1111);
+        String flag = "true";
+        try {
+            // 保证创建一个新文件
+//            File file = new File("/home/kali/Desktop/test/client_folder\n");
+            File file = new File("E://to_v_attr.json");
+            if (!file.getParentFile().exists()) { // 如果父目录不存在，创建父目录
+                file.getParentFile().mkdirs();
+            }
+            if (file.exists()) { // 如果已存在,删除旧文件
+                file.delete();
+            }
+            file.createNewFile();
+            // 将格式化后的字符串写入文件
+            Writer write = new OutputStreamWriter(new FileOutputStream(file), "UTF-8");
+            write.write(content);
+            write.flush();
+            write.close();
+            int status = service.callUser();
+        } catch (Exception e) {
+            flag = "false";
+            e.printStackTrace();
+        }
+        return flag;
     }
     @RequestMapping(value = "/callClient",method = RequestMethod.GET)
     public int callClient() throws IOException, InterruptedException {
@@ -31,7 +64,7 @@ public class UserController {
         int status = service.callUser();
         return status;
     }
-    @RequestMapping(value = "/picupload", method = RequestMethod.POST)
+    @RequestMapping(value = "/localRequestUpload", method = RequestMethod.POST)
     public String upload(@RequestParam("credential") MultipartFile uploadFile) throws IOException {
         if (null == uploadFile) {
             return "false";
@@ -54,8 +87,9 @@ public class UserController {
             String imgName = "credential.json";
             String path = "/home/kali/Desktop/test/client_folder/"+imgName;
 
-            //文件实现上传q
+            //文件实现上传
             uploadFile.transferTo(new File(path));
+            //调用./client
             int status = service.callClient();
             return "true";
         } catch (Exception e) {
