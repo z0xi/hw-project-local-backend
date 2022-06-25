@@ -22,20 +22,20 @@ public class UserController {
     }
     @ResponseBody
     @RequestMapping(value = "/localRequestService",method = RequestMethod.POST)
-        public String requestService(@RequestParam("objects") String objects) throws IOException, InterruptedException {
-        List<JSONObject> l = JSONObject.parseArray(objects,JSONObject.class);
-        System.out.print("debug");
-        JSONObject obj = new JSONObject();
-        for(JSONObject json : l){
-            obj.put(json.getString("name"),json.get("value"));
-        }
+        public String requestService(@RequestParam("objects") String obj) throws IOException, InterruptedException {
+//        List<JSONObject> l = JSONObject.parseArray(objects,JSONObject.class);
+//        System.out.print("debug");
+//        JSONObject obj = new JSONObject();
+//        for(JSONObject json : l){
+//            obj.put(json.getString("name"),json.get("value"));
+//        }
         // https://blog.csdn.net/yelllowcong/article/details/79711429
-        String content = obj.toJSONString();
+        String content = obj;
         String flag = "true";
         try {
             // 保证创建一个新文件
 //            File file = new File("E://a.json");
-            File file = new File("/home/kali/Desktop/hw-project/verifier/client_folder/to_v_attr.json");
+            File file = new File("/home/kali/Desktop/hw-project/user/client_folder/to_v_attr.json");
             if (!file.getParentFile().exists()) { // 如果父目录不存在，创建父目录
                 file.getParentFile().mkdirs();
             }
