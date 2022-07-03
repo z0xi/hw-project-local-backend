@@ -5,20 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 public class User {
-    String name;
-    int password;
-    public String getName(){
-        return  name;
-    }
-    public void setName(String name){
-        this.name = name;
-    }
-    public int getPassword(){
-        return  password;
-    }
-    public void setPassword(int password){
-        this.password = password;
-    }
+
     public int runClient() throws IOException, InterruptedException{
         //参考自https://blog.csdn.net/xqhadoop/article/details/62237086
         Runtime r=Runtime.getRuntime();
@@ -53,8 +40,5 @@ public class User {
         System.out.println("return value:"+ret);
         System.out.println("exit value:"+exit_v);
         return ret;
-    }
-    public String toString(){
-        return "{name='"+name+"\',"+"password="+password+"}";
     }
 }
