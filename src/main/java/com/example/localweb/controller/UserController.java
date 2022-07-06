@@ -30,7 +30,7 @@ public class UserController {
         try {
             // 保证创建一个新文件
 //            File file = new File("E://a.json");
-            File file = new File("./client_folder/to_v_attr.json");
+            File file = new File("/home/kali/Desktop/hw-project/user/client_folder/to_v_attr.json");
             if (!file.getParentFile().exists()) { // 如果父目录不存在，创建父目录
                 file.getParentFile().mkdirs();
             }
@@ -72,16 +72,11 @@ public class UserController {
 //        }
         //逻辑处理
         //https://blog.csdn.net/qq_39038793/article/details/102857003?spm=1001.2101.3001.6650.3&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-3-102857003-blog-101718878.pc_relevant_blogantidownloadv1&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-3-102857003-blog-101718878.pc_relevant_blogantidownloadv1&utm_relevant_index=6
-        File fileDir = new File("./client_folder\n");
-        if(!fileDir.exists()) {
-            //如果没有目录应该创建目录
-            fileDir.mkdirs();
-        }
         try {
             //获取图片名称
 //            String imgName = uploadFile.getOriginalFilename();
             String imgName = "credential.json";
-            String path = "./client_folder/"+imgName;
+            String path = "/home/kali/Desktop/hw-project/user/client_folder/"+imgName;
 
             //文件实现上传
             uploadFile.transferTo(new File(path));
