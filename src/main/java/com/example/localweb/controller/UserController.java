@@ -30,7 +30,9 @@ public class UserController {
         try {
             // 保证创建一个新文件
 //            File file = new File("E://a.json");
-            File file = new File("/home/kali/Desktop/hw-project/user/client_folder/to_v_attr.json");
+            String imgName = "to_v_attr.json";
+            String path = "/home/kali/Desktop/hw-project/user/client_folder/"+imgName;
+            File file = new File(path);
             if (!file.getParentFile().exists()) { // 如果父目录不存在，创建父目录
                 file.getParentFile().mkdirs();
             }
